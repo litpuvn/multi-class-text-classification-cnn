@@ -14,8 +14,16 @@ logging.getLogger().setLevel(logging.INFO)
 
 def train_cnn():
 	"""Step 0: load sentences, labels, and training parameters"""
-	train_file = sys.argv[1]
-	x_raw, y_raw, df, labels = data_helper.load_data_and_labels(train_file)
+	train_file = 'data/consumer_complaints.csv'
+	label_column = 'product'
+	data_columns = ['consumer_complaint_narrative']
+
+	train_file = 'data/data_excel_converted.csv'
+	label_column = 'CLS-AVGYLD'
+	data_columns = ['ELE', 'SLOPE', 'CURV', 'PRO', 'PLAN', 'EC_SH', 'EC_DP', 'BAND1', 'BAND2', 'BAND3', 'BAND4', 'VI_AVG']
+
+	x_raw, y_raw, df, labels = data_helper.load_data_and_labels(train_file, label_column=label_column,
+																data_columns=data_columns)
 
 	parameter_file = sys.argv[2]
 	params = json.loads(open(parameter_file).read())
@@ -128,7 +136,8 @@ def train_cnn():
 				total_test_correct += num_test_correct
 
 			test_accuracy = float(total_test_correct) / len(y_test)
-			logging.critical('Accuracy on test set is {} based on the best model {}'.format(test_accuracy, path))
+			# logging.critical('Accuracy on test set is {} based on the best model {}'.format(test_accuracy, path))
+			logging.critical('Accuracy on test set is {} based on the best model'.format(test_accuracy))
 			logging.critical('The training is complete')
 
 if __name__ == '__main__':
