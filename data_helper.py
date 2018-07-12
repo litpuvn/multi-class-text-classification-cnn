@@ -49,8 +49,10 @@ def load_data_and_labels(filename, label_column='product', data_columns=['consum
 		my_string = ' '.join(str(x) for x in mydata)
 
 		return clean_str(my_string)
+		#return my_string
 
 	x_raw = df[x_fields].apply(concatenate_columns, axis=1).tolist()
+	#x_raw = df[selected[1]].apply(lambda x: clean_str(x)).tolist()
 	y_raw = df[selected[0]].apply(lambda y: label_dict[y]).tolist()
 
 	return x_raw, y_raw, df, labels
