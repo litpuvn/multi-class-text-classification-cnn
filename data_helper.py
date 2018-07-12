@@ -23,12 +23,12 @@ def clean_str(s):
 	s = re.sub(r'[^\x00-\x7F]+', "", s)
 	return s.strip().lower()
 
-def load_data_and_labels(filename):
+def load_data_and_labels(filename, label_column='product', data_columns=['consumer_complaint_narrative']):
 	"""Load sentences and labels"""
 	# df = pd.read_csv(filename, compression='zip', dtype={'consumer_complaint_narrative': object})
 	df = pd.read_csv(filename, dtype={'consumer_complaint_narrative': object})
 
-	selected = ['product', 'consumer_complaint_narrative']
+	selected = [label_column] + data_columns
 	non_selected = list(set(df.columns) - set(selected))
 
 	df = df.drop(non_selected, axis=1) # Drop non selected columns
